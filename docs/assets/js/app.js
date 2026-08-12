@@ -22,6 +22,7 @@
   const downloadBtn = document.getElementById("downloadBtn");
   const resetBtn = document.getElementById("resetBtn");
   const connStatus = document.getElementById("connStatus");
+  const connBanner = document.getElementById("connBanner");
 
   function setStatus(msg, kind = "") {
     statusText.textContent = msg || "";
@@ -32,6 +33,7 @@
     if (!connStatus) return;
     connStatus.textContent = msg;
     connStatus.className = "conn" + (kind ? ` ${kind}` : "");
+    if (connBanner) connBanner.hidden = kind !== "bad";
   }
 
   function apiUrl(path) {
@@ -41,7 +43,8 @@
   }
 
   function refreshReady() {
-    generateBtn.disabled = !(state.styleId && state.bgColor && state.file && state.online);
+    // 연결 여부와 관계없이 입력만 되면 누를 수 있게 함 (미연결 시 클릭하면 안내)
+    generateBtn.disabled = !(state.styleId && state.bgColor && state.file);
   }
 
   function selectStyle(card) {
