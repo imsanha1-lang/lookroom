@@ -1,0 +1,58 @@
+{
+  "styles": [
+    {
+      "id": "style_01",
+      "label": "밝은 스마일",
+      "file": "style_01.jpg",
+      "hint": "정면 · 밝은 스튜디오"
+    },
+    {
+      "id": "style_02",
+      "label": "블랙 포멀",
+      "file": "style_02.jpg",
+      "hint": "다크 배경 · 포멀"
+    },
+    {
+      "id": "style_03",
+      "label": "핸드 포즈",
+      "file": "style_03.jpg",
+      "hint": "손 제스처 · 시크"
+    },
+    {
+      "id": "style_04",
+      "label": "턱 터치",
+      "file": "style_04.jpg",
+      "hint": "클로즈업 · 손 포즈"
+    },
+    {
+      "id": "style_05",
+      "label": "쿨 소프트",
+      "file": "style_05.jpg",
+      "hint": "쿨톤 · 소프트 조명"
+    },
+    {
+      "id": "style_06",
+      "label": "캐주얼 스마일",
+      "file": "style_06.jpg",
+      "hint": "캐주얼 · 밝은 톤"
+    },
+    {
+      "id": "style_07",
+      "label": "오버숄더",
+      "file": "style_07.jpg",
+      "hint": "어깨 너머 · 미니멀"
+    },
+    {
+      "id": "style_08",
+      "label": "블레이저 스마일",
+      "file": "style_08.jpg",
+      "hint": "사이드 · 블레이저"
+    },
+    {
+      "id": "style_09",
+      "label": "클린 업도",
+      "file": "style_09.jpg",
+      "hint": "업도 · 클린 스튜디오"
+    }
+  ]
+}

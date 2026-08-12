@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LOOKROOM — 디자이너 프로필</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./assets/css/app.css" />
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+
+  <header class="top">
+    <a class="brand" href="./">LOOKROOM</a>
+    <p class="top-note">정사각 스튜디오 프로필</p>
+    <p class="conn" id="connStatus" aria-live="polite">연결 확인 중…</p>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1 class="brand-hero">LOOKROOM</h1>
+      <p class="hero-line">느낌 고르고, 배경색 정하고, 셀카만 올리면 됩니다.</p>
+      <p class="hero-sub">선택한 참고샷의 조명·각도·포즈·색감·인물 크기로 스튜디오 프로필을 만듭니다.</p>
+      <a class="cta" href="#studio">프로필 만들기</a>
+    </section>
+
+    <section id="studio" class="studio">
+      <div class="step" data-step="1">
+        <div class="step-head">
+          <span class="step-num">01</span>
+          <h2>느낌 선택</h2>
+          <p>9장 중 원하는 스튜디오 느낌을 고르세요.</p>
+        </div>
+        <div class="style-grid" id="styleGrid" role="listbox" aria-label="느낌 선택">
+                    <button
+            type="button"
+            class="style-card"
+            role="option"
+            aria-selected="false"
+            data-style-id="style_01"
+            data-label="밝은 스마일"
+          >
+            <img src="./styles/style_01.jpg" alt="밝은 스마일" loading="lazy" />
+            <span class="style-meta">
+              <strong>밝은 스마일</strong>
+              <small>정면 · 밝은 스튜디오</small>
+            </span>
+          </button>
+          <button
+            type="button"
+            class="style-card"
+            role="option"
+            aria-selected="false"
+            data-style-id="style_02"
+            data-label="블랙 포멀"
+          >
+            <img src="./styles/style_02.jpg" alt="블랙 포멀" loading="lazy" />
+            <span class="style-meta">
+              <strong>블랙 포멀</strong>
+              <small>다크 배경 · 포멀</small>
+            </span>
+          </button>
+          <button
+            type="button"
+            class="style-card"
+            role="option"
+            aria-selected="false"
+            data-style-id="style_03"
+            data-label="핸드 포즈"
+          >
+            <img src="./styles/style_03.jpg" alt="핸드 포즈" loading="lazy" />
+            <span class="style-meta">
+              <strong>핸드 포즈</strong>
+              <small>손 제스처 · 시크</small>
+            </span>
+          </button>
+          <button
+            type="button"
+            class="style-card"
+            role="option"
+            aria-selected="false"
+            data-style-id="style_04"
+            data-label="턱 터치"
+          >
+            <img src="./styles/style_04.jpg" alt="턱 터치" loading="lazy" />
+            <span class="style-meta">
+              <strong>턱 터치</strong>
+              <small>클로즈업 · 손 포즈</small>
+            </span>
+          </button>
+          <button
+            type="button"
+            class="style-card"
+            role="option"
+            aria-selected="false"
+            data-style-id="style_05"
+            data-label="쿨 소프트"
+          >
+            <img src="./styles/style_05.jpg" alt="쿨 소프트" loading="lazy" />
+            <span class="style-meta">
+              <strong>쿨 소프트</strong>
+              <small>쿨톤 · 소프트 조명</small>
+            </span>
+          </button>
+          <button
+            type="button"
+            class="style-card"
+            role="option"
+            aria-selected="false"
+            data-style-id="style_06"
+            data-label="캐주얼 스마일"
+          >
+            <img src="./styles/style_06.jpg" alt="캐주얼 스마일" loading="lazy" />
+            <span class="style-meta">
+              <strong>캐주얼 스마일</strong>
+              <small>캐주얼 · 밝은 톤</small>
+            </span>
+          </button>
+          <button
+            type="button"
+            class="style-card"
+            role="option"
+            aria-selected="false"
+            data-style-id="style_07"
+            data-label="오버숄더"
+          >
+            <img src="./styles/style_07.jpg" alt="오버숄더" loading="lazy" />
+            <span class="style-meta">
+              <strong>오버숄더</strong>
+              <small>어깨 너머 · 미니멀</small>
+            </span>
+          </button>
+          <button
+            type="button"
+            class="style-card"
+            role="option"
+            aria-selected="false"
+            data-style-id="style_08"
+            data-label="블레이저 스마일"
+          >
+            <img src="./styles/style_08.jpg" alt="블레이저 스마일" loading="lazy" />
+            <span class="style-meta">
+              <strong>블레이저 스마일</strong>
+              <small>사이드 · 블레이저</small>
+            </span>
+          </button>
+          <button
+            type="button"
+            class="style-card"
+            role="option"
+            aria-selected="false"
+            data-style-id="style_09"
+            data-label="클린 업도"
+          >
+            <img src="./styles/style_09.jpg" alt="클린 업도" loading="lazy" />
+            <span class="style-meta">
+              <strong>클린 업도</strong>
+              <small>업도 · 클린 스튜디오</small>
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <div class="step" data-step="2">
+        <div class="step-head">
+          <span class="step-num">02</span>
+          <h2>배경색</h2>
+          <p>프로필 배경으로 쓸 단색을 고르세요.</p>
+        </div>
+        <div class="swatches" id="swatches">
+          <button type="button" class="swatch" data-color="#F4F1EC" style="--c:#F4F1EC" aria-label="아이보리"></button>
+          <button type="button" class="swatch" data-color="#E8E4DE" style="--c:#E8E4DE" aria-label="웜 그레이"></button>
+          <button type="button" class="swatch" data-color="#D9D9D9" style="--c:#D9D9D9" aria-label="라이트 그레이"></button>
+          <button type="button" class="swatch" data-color="#B8C4B8" style="--c:#B8C4B8" aria-label="세이지"></button>
+          <button type="button" class="swatch" data-color="#9BB0C1" style="--c:#9BB0C1" aria-label="슬레이트 블루"></button>
+          <button type="button" class="swatch" data-color="#C4A484" style="--c:#C4A484" aria-label="샌드"></button>
+          <button type="button" class="swatch" data-color="#2A2A2A" style="--c:#2A2A2A" aria-label="차콜"></button>
+          <button type="button" class="swatch" data-color="#1A1A1A" style="--c:#1A1A1A" aria-label="블랙"></button>
+          <label class="swatch custom" title="직접 선택">
+            <input type="color" id="customColor" value="#F4F1EC" />
+            <span>직접</span>
+          </label>
+        </div>
+        <p class="color-readout">선택 색 <code id="colorValue">#F4F1EC</code></p>
+      </div>
+
+      <div class="step" data-step="3">
+        <div class="step-head">
+          <span class="step-num">03</span>
+          <h2>셀카 업로드</h2>
+          <p>얼굴이 잘 보이는 정면·약간 측면 셀카가 가장 좋아요.</p>
+        </div>
+        <label class="upload" id="uploadZone">
+          <input type="file" id="selfieInput" accept="image/*" hidden />
+          <div class="upload-inner" id="uploadInner">
+            <span class="upload-title">사진을 끌어오거나 클릭해서 선택</span>
+            <span class="upload-hint">JPG, PNG · 최대 12MB</span>
+          </div>
+          <img id="selfiePreview" class="selfie-preview" alt="업로드한 셀카 미리보기" hidden />
+        </label>
+      </div>
+
+      <div class="actions">
+        <button type="button" class="btn-primary" id="generateBtn" disabled>프로필 만들기</button>
+        <p class="status" id="statusText" aria-live="polite"></p>
+      </div>
+
+      <div class="result" id="resultPanel" hidden>
+        <div class="step-head">
+          <span class="step-num">결과</span>
+          <h2>완성된 프로필</h2>
+          <p>정사각 1024px · 바로 저장해서 쓰세요.</p>
+        </div>
+        <div class="result-frame">
+          <img id="resultImage" alt="생성된 프로필" />
+        </div>
+        <div class="result-actions">
+          <a class="btn-primary" id="downloadBtn" href="#" download="lookroom-profile.jpg">다운로드</a>
+          <button type="button" class="btn-ghost" id="resetBtn">다시 만들기</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <span>LOOKROOM</span>
+    <span>참고샷은 <code>static/styles</code> 에서 교체할 수 있습니다.</span>
+  </footer>
+
+  <script src="./assets/js/app.js"></script>
+</body>
+</html>
