@@ -101,6 +101,11 @@
   }
 
   async function checkHealth() {
+    // 터널 URL이 바뀌었을 수 있으니, 실패/미연결 시 api-base를 다시 읽음
+    if (!state.online) {
+      const latest = await resolveApiBase();
+      if (latest) state.apiBase = latest;
+    }
     try {
       const res = await fetch(apiUrl("/api/health"), { cache: "no-store" });
       const data = await res.json();
@@ -112,9 +117,25 @@
       }
     } catch (_) {
       state.online = false;
+      const latest = await resolveApiBase();
+      if (latest && latest !== state.apiBase) {
+        state.apiBase = latest;
+        try {
+          const res2 = await fetch(apiUrl("/api/health"), { cache: "no-store" });
+          const data2 = await res2.json();
+          state.online = !!(res2.ok && data2.ok);
+          if (state.online) {
+            setConn("생성 PC 연결됨", "ok");
+            refreshReady();
+            return;
+          }
+        } catch (_) {
+          /* fall through */
+        }
+      }
       setConn(
         state.apiBase
-          ? "생성 PC 미연결 · start_online.bat 실행 필요"
+          ? "생성 PC 미연결 · PC가 켜져 있고 온라인 서버가 실행 중인지 확인하세요"
           : "서버 연결 실패",
         "bad"
       );
@@ -157,7 +178,7 @@
   generateBtn.addEventListener("click", async () => {
     if (generateBtn.disabled) return;
     if (!state.online) {
-      setStatus("생성 PC가 연결되어 있지 않습니다. start_online.bat 을 실행하세요.", "error");
+      setStatus("생성 PC가 연결되어 있지 않습니다. PC 전원과 온라인 서버 실행을 확인하세요.", "error");
       return;
     }
 
