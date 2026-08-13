@@ -393,7 +393,7 @@ body {
 .status.busy { color: var(--accent); }
 
 .result-frame {
-  max-width: 420px;
+  max-width: 720px;
   border-radius: var(--radius);
   overflow: hidden;
   border: 1px solid var(--line);
@@ -404,7 +404,7 @@ body {
 .result-frame img {
   display: block;
   width: 100%;
-  aspect-ratio: 1;
+  aspect-ratio: 1200 / 750;
   object-fit: cover;
 }
 
