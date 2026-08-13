@@ -21,7 +21,7 @@
   <main>
     <section class="hero">
       <h1 class="brand-hero">LOOKROOM</h1>
-      <p class="hero-line">느낌 고르고, 배경색 정하고, 셀카만 올리면 됩니다.</p>
+      <p class="hero-line">느낌 고르고, 셀카만 올리면 됩니다. 배경색은 선택사항이에요.</p>
       <p class="hero-sub">느낌 원본 사진에서 인물(얼굴·헤어)만 업로드 셀카로 바꿉니다. 포즈·구도·크기·의상·조명은 원본을 유지합니다.</p>
       <a class="cta" href="#studio">프로필 만들기</a>
     </section>
@@ -140,9 +140,10 @@
         <div class="step-head">
           <span class="step-num">02</span>
           <h2>배경색</h2>
-          <p>프로필 배경으로 쓸 단색을 고르세요.</p>
+          <p>원하는 색을 고르거나, 건너뛰면 느낌 사진 배경을 그대로 씁니다.</p>
         </div>
         <div class="swatches" id="swatches">
+          <button type="button" class="swatch swatch-skip" id="bgSkip" aria-selected="true" aria-label="레퍼런스 배경 유지">유지</button>
           <button type="button" class="swatch" data-color="#F4F1EC" style="--c:#F4F1EC" aria-label="아이보리"></button>
           <button type="button" class="swatch" data-color="#E8E4DE" style="--c:#E8E4DE" aria-label="웜 그레이"></button>
           <button type="button" class="swatch" data-color="#D9D9D9" style="--c:#D9D9D9" aria-label="라이트 그레이"></button>
@@ -156,7 +157,7 @@
             <span>직접</span>
           </label>
         </div>
-        <p class="color-readout">선택 색 <code id="colorValue">#F4F1EC</code></p>
+        <p class="color-readout">선택 색 <code id="colorValue">레퍼런스 유지</code></p>
       </div>
 
       <div class="step" data-step="3">

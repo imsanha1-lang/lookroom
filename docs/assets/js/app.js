@@ -1,7 +1,7 @@
 (() => {
   const state = {
     styleId: null,
-    bgColor: "#F4F1EC",
+    bgColor: null, // null = 레퍼런스 배경 유지
     file: null,
     apiBase: "",
     online: false,
@@ -9,6 +9,7 @@
 
   const styleCards = [...document.querySelectorAll(".style-card")];
   const swatches = [...document.querySelectorAll(".swatch[data-color]")];
+  const bgSkip = document.getElementById("bgSkip");
   const customColor = document.getElementById("customColor");
   const colorValue = document.getElementById("colorValue");
   const uploadZone = document.getElementById("uploadZone");
@@ -43,8 +44,7 @@
   }
 
   function refreshReady() {
-    // 연결 여부와 관계없이 입력만 되면 누를 수 있게 함 (미연결 시 클릭하면 안내)
-    generateBtn.disabled = !(state.styleId && state.bgColor && state.file);
+    generateBtn.disabled = !(state.styleId && state.file);
   }
 
   function selectStyle(card) {
@@ -54,8 +54,23 @@
     refreshReady();
   }
 
+  function clearColorSelection() {
+    swatches.forEach((s) => s.setAttribute("aria-selected", "false"));
+    if (bgSkip) bgSkip.setAttribute("aria-selected", "false");
+  }
+
+  function setSkipBg() {
+    state.bgColor = null;
+    clearColorSelection();
+    if (bgSkip) bgSkip.setAttribute("aria-selected", "true");
+    colorValue.textContent = "레퍼런스 유지";
+    document.documentElement.style.setProperty("--selected-color", "transparent");
+    refreshReady();
+  }
+
   function setColor(hex, fromCustom = false) {
     state.bgColor = hex.toUpperCase();
+    clearColorSelection();
     colorValue.textContent = state.bgColor;
     document.documentElement.style.setProperty("--selected-color", state.bgColor);
     swatches.forEach((s) => {
@@ -101,7 +116,6 @@
   }
 
   async function checkHealth() {
-    // 터널 URL이 바뀌었을 수 있으니, 실패/미연결 시 api-base를 다시 읽음
     if (!state.online) {
       const latest = await resolveApiBase();
       if (latest) state.apiBase = latest;
@@ -147,6 +161,10 @@
     card.addEventListener("click", () => selectStyle(card));
   });
 
+  if (bgSkip) {
+    bgSkip.addEventListener("click", () => setSkipBg());
+  }
+
   swatches.forEach((s) => {
     s.addEventListener("click", () => setColor(s.dataset.color));
   });
@@ -184,7 +202,7 @@
 
     const form = new FormData();
     form.append("style_id", state.styleId);
-    form.append("bg_color", state.bgColor);
+    form.append("bg_color", state.bgColor || "reference");
     form.append("selfie", state.file);
 
     generateBtn.disabled = true;
@@ -216,7 +234,7 @@
   });
 
   if (styleCards[0]) selectStyle(styleCards[0]);
-  setColor("#F4F1EC");
+  setSkipBg();
 
   (async () => {
     state.apiBase = await resolveApiBase();
