@@ -207,6 +207,10 @@ body {
 .style-card:nth-child(7) { animation-delay: 0.26s; }
 .style-card:nth-child(8) { animation-delay: 0.3s; }
 .style-card:nth-child(9) { animation-delay: 0.34s; }
+.style-card:nth-child(10) { animation-delay: 0.38s; }
+.style-card:nth-child(11) { animation-delay: 0.42s; }
+.style-card:nth-child(12) { animation-delay: 0.46s; }
+.style-card:nth-child(13) { animation-delay: 0.5s; }
 
 .style-card img {
   display: block;

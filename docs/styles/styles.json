@@ -53,6 +53,30 @@
       "label": "클린 업도",
       "file": "style_09.jpg",
       "hint": "업도 · 클린 스튜디오"
+    },
+    {
+      "id": "style_10",
+      "label": "화이트 셔츠",
+      "file": "style_10.jpg",
+      "hint": "밝은 스튜디오 · 정면"
+    },
+    {
+      "id": "style_11",
+      "label": "웜 고보",
+      "file": "style_11.jpg",
+      "hint": "베이지 · 패턴 조명"
+    },
+    {
+      "id": "style_12",
+      "label": "섀도우 프로파일",
+      "file": "style_12.jpg",
+      "hint": "그레이 · 실루엣 그림자"
+    },
+    {
+      "id": "style_13",
+      "label": "다크 터틀넥",
+      "file": "style_13.jpg",
+      "hint": "윈도우 라이트 · 무드"
     }
   ]
 }
