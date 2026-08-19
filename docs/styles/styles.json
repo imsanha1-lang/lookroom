@@ -2,81 +2,117 @@
   "styles": [
     {
       "id": "style_01",
-      "label": "밝은 스마일",
+      "label": "느낌 01",
       "file": "style_01.jpg",
-      "hint": "정면 · 밝은 스튜디오"
+      "hint": ""
     },
     {
       "id": "style_02",
-      "label": "블랙 포멀",
+      "label": "느낌 02",
       "file": "style_02.jpg",
-      "hint": "다크 배경 · 포멀"
+      "hint": ""
     },
     {
       "id": "style_03",
-      "label": "핸드 포즈",
+      "label": "느낌 03",
       "file": "style_03.jpg",
-      "hint": "손 제스처 · 시크"
+      "hint": ""
     },
     {
       "id": "style_04",
-      "label": "턱 터치",
+      "label": "느낌 04",
       "file": "style_04.jpg",
-      "hint": "클로즈업 · 손 포즈"
+      "hint": ""
     },
     {
       "id": "style_05",
-      "label": "쿨 소프트",
+      "label": "느낌 05",
       "file": "style_05.jpg",
-      "hint": "쿨톤 · 소프트 조명"
+      "hint": ""
     },
     {
       "id": "style_06",
-      "label": "캐주얼 스마일",
+      "label": "느낌 06",
       "file": "style_06.jpg",
-      "hint": "캐주얼 · 밝은 톤"
+      "hint": ""
     },
     {
       "id": "style_07",
-      "label": "오버숄더",
+      "label": "느낌 07",
       "file": "style_07.jpg",
-      "hint": "어깨 너머 · 미니멀"
+      "hint": ""
     },
     {
       "id": "style_08",
-      "label": "블레이저 스마일",
+      "label": "느낌 08",
       "file": "style_08.jpg",
-      "hint": "사이드 · 블레이저"
+      "hint": ""
     },
     {
       "id": "style_09",
-      "label": "클린 업도",
+      "label": "느낌 09",
       "file": "style_09.jpg",
-      "hint": "업도 · 클린 스튜디오"
+      "hint": ""
     },
     {
       "id": "style_10",
-      "label": "화이트 셔츠",
+      "label": "느낌 10",
       "file": "style_10.jpg",
-      "hint": "밝은 스튜디오 · 정면"
+      "hint": ""
     },
     {
       "id": "style_11",
-      "label": "웜 고보",
+      "label": "느낌 11",
       "file": "style_11.jpg",
-      "hint": "베이지 · 패턴 조명"
+      "hint": ""
     },
     {
       "id": "style_12",
-      "label": "섀도우 프로파일",
+      "label": "느낌 12",
       "file": "style_12.jpg",
-      "hint": "그레이 · 실루엣 그림자"
+      "hint": ""
     },
     {
       "id": "style_13",
-      "label": "다크 터틀넥",
+      "label": "느낌 13",
       "file": "style_13.jpg",
-      "hint": "윈도우 라이트 · 무드"
+      "hint": ""
+    },
+    {
+      "id": "style_14",
+      "label": "느낌 14",
+      "file": "style_14.jpg",
+      "hint": ""
+    },
+    {
+      "id": "style_15",
+      "label": "느낌 15",
+      "file": "style_15.jpg",
+      "hint": ""
+    },
+    {
+      "id": "style_16",
+      "label": "느낌 16",
+      "file": "style_16.jpg",
+      "hint": ""
+    },
+    {
+      "id": "style_17",
+      "label": "느낌 17",
+      "file": "style_17.jpg",
+      "hint": ""
+    },
+    {
+      "id": "style_18",
+      "label": "느낌 18",
+      "file": "style_18.jpg",
+      "hint": ""
+    },
+    {
+      "id": "style_19",
+      "label": "느낌 19",
+      "file": "style_19.jpg",
+      "hint": ""
     }
   ]
 }
