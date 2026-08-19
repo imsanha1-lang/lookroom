@@ -101,7 +101,8 @@
     if (typeof window.LOOKROOM_API_BASE === "string" && window.LOOKROOM_API_BASE) {
       return window.LOOKROOM_API_BASE.replace(/\/$/, "");
     }
-    const candidates = ["./data/api-base.json", "/data/api-base.json"];
+    const bust = `t=${Date.now()}`;
+    const candidates = [`./data/api-base.json?${bust}`, `/data/api-base.json?${bust}`];
     for (const path of candidates) {
       try {
         const res = await fetch(path, { cache: "no-store" });
@@ -115,44 +116,41 @@
     return "";
   }
 
+  let healthTimer = null;
+
+  function scheduleHealth(ms) {
+    if (healthTimer) clearInterval(healthTimer);
+    healthTimer = setInterval(checkHealth, ms);
+  }
+
   async function checkHealth() {
-    if (!state.online) {
-      const latest = await resolveApiBase();
-      if (latest) state.apiBase = latest;
+    // 오프라인이면 api-base 를 매번 다시 읽어 PC 부팅 후 갱신된 터널 URL을 따라간다.
+    const latest = await resolveApiBase();
+    if (latest) state.apiBase = latest;
+
+    if (!state.apiBase) {
+      state.online = false;
+      setConn("생성 PC 대기 중 · PC가 켜지면 자동 연결됩니다", "bad");
+      scheduleHealth(5000);
+      refreshReady();
+      return;
     }
+
     try {
       const res = await fetch(apiUrl("/api/health"), { cache: "no-store" });
       const data = await res.json();
       state.online = !!(res.ok && data.ok);
       if (state.online) {
-        setConn(state.apiBase ? "생성 PC 연결됨" : "로컬 연결됨", "ok");
+        setConn("생성 PC 연결됨", "ok");
+        scheduleHealth(20000);
       } else {
-        setConn("생성 PC 미연결", "bad");
+        setConn("생성 PC 미연결 · 잠시 후 자동 재시도", "bad");
+        scheduleHealth(5000);
       }
     } catch (_) {
       state.online = false;
-      const latest = await resolveApiBase();
-      if (latest && latest !== state.apiBase) {
-        state.apiBase = latest;
-        try {
-          const res2 = await fetch(apiUrl("/api/health"), { cache: "no-store" });
-          const data2 = await res2.json();
-          state.online = !!(res2.ok && data2.ok);
-          if (state.online) {
-            setConn("생성 PC 연결됨", "ok");
-            refreshReady();
-            return;
-          }
-        } catch (_) {
-          /* fall through */
-        }
-      }
-      setConn(
-        state.apiBase
-          ? "생성 PC 미연결 · PC가 켜져 있고 온라인 서버가 실행 중인지 확인하세요"
-          : "서버 연결 실패",
-        "bad"
-      );
+      setConn("생성 PC 연결 중… PC가 켜져 있으면 곧 연결됩니다", "bad");
+      scheduleHealth(5000);
     }
     refreshReady();
   }
@@ -239,6 +237,6 @@
   (async () => {
     state.apiBase = await resolveApiBase();
     await checkHealth();
-    setInterval(checkHealth, 20000);
+    scheduleHealth(state.online ? 20000 : 5000);
   })();
 })();
