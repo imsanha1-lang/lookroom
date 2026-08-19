@@ -113,6 +113,12 @@
       "label": "느낌 19",
       "file": "style_19.jpg",
       "hint": ""
+    },
+    {
+      "id": "style_20",
+      "label": "느낌 20",
+      "file": "style_20.jpg",
+      "hint": ""
     }
   ]
 }
