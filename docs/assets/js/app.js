@@ -116,6 +116,7 @@
   }
 
   let healthTimer = null;
+  let healthFails = 0;
 
   function scheduleHealth(ms) {
     if (healthTimer) clearInterval(healthTimer);
@@ -123,9 +124,8 @@
   }
 
   async function checkHealth() {
-    // 매 주기 api-base 를 다시 읽어 죽은 주소에 고정되지 않게 한다.
     const latest = await resolveApiBase();
-    state.apiBase = latest || "";
+    if (latest) state.apiBase = latest;
 
     if (!state.apiBase) {
       state.online = false;
@@ -140,17 +140,21 @@
       const data = await res.json();
       state.online = !!(res.ok && data.ok);
       if (state.online) {
+        healthFails = 0;
         setConn("생성 PC 연결됨", "ok");
         scheduleHealth(20000);
       } else {
-        state.apiBase = "";
+        healthFails += 1;
         setConn("생성 PC 미연결 · 잠시 후 자동 재시도", "bad");
+        if (healthFails >= 3) state.apiBase = "";
         scheduleHealth(5000);
       }
     } catch (_) {
       state.online = false;
-      state.apiBase = "";
+      healthFails += 1;
       setConn("생성 PC 연결 중… PC가 켜져 있으면 곧 연결됩니다", "bad");
+      // 일시 실패에 주소를 바로 버리지 않음 (3회 연속 실패 시만)
+      if (healthFails >= 3) state.apiBase = "";
       scheduleHealth(5000);
     }
     refreshReady();
