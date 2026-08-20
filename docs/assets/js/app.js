@@ -222,7 +222,16 @@
       setStatus("완성됐어요.");
       resultPanel.scrollIntoView({ behavior: "smooth", block: "start" });
     } catch (err) {
-      setStatus(err.message || "오류가 발생했습니다.", "error");
+      const msg = String(err && err.message ? err.message : err);
+      if (/failed to fetch|networkerror|load failed/i.test(msg)) {
+        state.online = false;
+        state.apiBase = "";
+        setConn("생성 PC 연결 중… 주소 갱신 후 다시 시도합니다", "bad");
+        setStatus("생성 PC 연결이 끊겼습니다. 잠시 후 다시 눌러 주세요.", "error");
+        scheduleHealth(3000);
+      } else {
+        setStatus(msg || "오류가 발생했습니다.", "error");
+      }
     } finally {
       refreshReady();
     }
