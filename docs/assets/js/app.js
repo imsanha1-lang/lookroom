@@ -101,17 +101,16 @@
     if (typeof window.LOOKROOM_API_BASE === "string" && window.LOOKROOM_API_BASE) {
       return window.LOOKROOM_API_BASE.replace(/\/$/, "");
     }
+    // 사이트 루트 기준 상대경로만 사용 (/data/... 는 github.io 루트로 가서 404)
     const bust = `t=${Date.now()}`;
-    const candidates = [`./data/api-base.json?${bust}`, `/data/api-base.json?${bust}`];
-    for (const path of candidates) {
-      try {
-        const res = await fetch(path, { cache: "no-store" });
-        if (!res.ok) continue;
-        const data = await res.json();
-        if (data && data.api_base) return String(data.api_base).replace(/\/$/, "");
-      } catch (_) {
-        /* try next */
-      }
+    const path = `./data/api-base.json?${bust}`;
+    try {
+      const res = await fetch(path, { cache: "no-store" });
+      if (!res.ok) return "";
+      const data = await res.json();
+      if (data && data.api_base) return String(data.api_base).replace(/\/$/, "");
+    } catch (_) {
+      /* empty */
     }
     return "";
   }
@@ -124,9 +123,9 @@
   }
 
   async function checkHealth() {
-    // 오프라인이면 api-base 를 매번 다시 읽어 PC 부팅 후 갱신된 터널 URL을 따라간다.
+    // 매 주기 api-base 를 다시 읽어 죽은 주소에 고정되지 않게 한다.
     const latest = await resolveApiBase();
-    if (latest) state.apiBase = latest;
+    state.apiBase = latest || "";
 
     if (!state.apiBase) {
       state.online = false;
@@ -137,14 +136,13 @@
     }
 
     try {
-      const res = await fetch(apiUrl("/api/health"), { cache: "no-store" });
+      const res = await fetch(apiUrl("/api/health"), { cache: "no-store", mode: "cors" });
       const data = await res.json();
       state.online = !!(res.ok && data.ok);
       if (state.online) {
         setConn("생성 PC 연결됨", "ok");
         scheduleHealth(20000);
       } else {
-        // 죽은/잘못된 주소면 버리고 다음 주기에 api-base 를 다시 읽는다.
         state.apiBase = "";
         setConn("생성 PC 미연결 · 잠시 후 자동 재시도", "bad");
         scheduleHealth(5000);
