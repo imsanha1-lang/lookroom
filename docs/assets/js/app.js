@@ -144,11 +144,14 @@
         setConn("생성 PC 연결됨", "ok");
         scheduleHealth(20000);
       } else {
+        // 죽은/잘못된 주소면 버리고 다음 주기에 api-base 를 다시 읽는다.
+        state.apiBase = "";
         setConn("생성 PC 미연결 · 잠시 후 자동 재시도", "bad");
         scheduleHealth(5000);
       }
     } catch (_) {
       state.online = false;
+      state.apiBase = "";
       setConn("생성 PC 연결 중… PC가 켜져 있으면 곧 연결됩니다", "bad");
       scheduleHealth(5000);
     }
