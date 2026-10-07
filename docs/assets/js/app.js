@@ -2,6 +2,7 @@
   const state = {
     styleId: null,
     bgColor: null, // null = 레퍼런스 배경 유지
+    faceLevel: "1",
     file: null,
     apiBase: "",
     online: false,
@@ -24,6 +25,7 @@
   const resetBtn = document.getElementById("resetBtn");
   const connStatus = document.getElementById("connStatus");
   const connBanner = document.getElementById("connBanner");
+  const faceLevelButtons = [...document.querySelectorAll(".face-level")];
 
   function setStatus(msg, kind = "") {
     statusText.textContent = msg || "";
@@ -83,6 +85,13 @@
     refreshReady();
   }
 
+  function setFaceLevel(level) {
+    state.faceLevel = level;
+    faceLevelButtons.forEach((btn) => {
+      btn.setAttribute("aria-checked", btn.dataset.faceLevel === level ? "true" : "false");
+    });
+  }
+
   function setFile(file) {
     if (!file || !file.type.startsWith("image/")) {
       setStatus("이미지 파일만 업로드할 수 있어요.", "error");
@@ -123,7 +132,28 @@
     healthTimer = setInterval(checkHealth, ms);
   }
 
+  async function probeHealth(url) {
+    try {
+      const res = await fetch(url, { cache: "no-store", mode: "cors" });
+      const data = await res.json();
+      return !!(res.ok && data && data.ok);
+    } catch (_) {
+      return false;
+    }
+  }
+
   async function checkHealth() {
+    // 이 PC에서 Flask 사이트를 연 경우: api-base.json 없이 바로 연결
+    if (await probeHealth("/api/health")) {
+      state.apiBase = "";
+      state.online = true;
+      healthFails = 0;
+      setConn("생성 PC 연결됨", "ok");
+      scheduleHealth(20000);
+      refreshReady();
+      return;
+    }
+
     const latest = await resolveApiBase();
     if (latest) state.apiBase = latest;
 
@@ -135,26 +165,15 @@
       return;
     }
 
-    try {
-      const res = await fetch(apiUrl("/api/health"), { cache: "no-store", mode: "cors" });
-      const data = await res.json();
-      state.online = !!(res.ok && data.ok);
-      if (state.online) {
-        healthFails = 0;
-        setConn("생성 PC 연결됨", "ok");
-        scheduleHealth(20000);
-      } else {
-        healthFails += 1;
-        setConn("생성 PC 미연결 · 잠시 후 자동 재시도", "bad");
-        if (healthFails >= 3) state.apiBase = "";
-        scheduleHealth(5000);
-      }
-    } catch (_) {
-      state.online = false;
+    const ok = await probeHealth(apiUrl("/api/health"));
+    state.online = ok;
+    if (ok) {
+      healthFails = 0;
+      setConn("생성 PC 연결됨", "ok");
+      scheduleHealth(20000);
+    } else {
       healthFails += 1;
-      setConn("생성 PC 연결 중… PC가 켜져 있으면 곧 연결됩니다", "bad");
-      // 일시 실패에 주소를 바로 버리지 않음 (3회 연속 실패 시만)
-      if (healthFails >= 3) state.apiBase = "";
+      setConn("생성 PC 연결 중… 서버를 다시 확인합니다", "bad");
       scheduleHealth(5000);
     }
     refreshReady();
@@ -173,6 +192,10 @@
   });
 
   customColor.addEventListener("input", () => setColor(customColor.value, true));
+
+  faceLevelButtons.forEach((btn) => {
+    btn.addEventListener("click", () => setFaceLevel(btn.dataset.faceLevel));
+  });
 
   selfieInput.addEventListener("change", () => {
     const file = selfieInput.files && selfieInput.files[0];
@@ -206,6 +229,7 @@
     const form = new FormData();
     form.append("style_id", state.styleId);
     form.append("bg_color", state.bgColor || "reference");
+    form.append("face_level", state.faceLevel || "1");
     form.append("selfie", state.file);
 
     generateBtn.disabled = true;
@@ -247,6 +271,7 @@
 
   if (styleCards[0]) selectStyle(styleCards[0]);
   setSkipBg();
+  setFaceLevel("1");
 
   (async () => {
     state.apiBase = await resolveApiBase();
